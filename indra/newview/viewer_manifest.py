@@ -572,6 +572,8 @@ class DarwinManifest(ViewerManifest):
             # copy additional libs in <bundle>/Contents/MacOS/
             self.path("../../libraries/universal-darwin/lib_release/libndofdev.dylib", dst="MacOS/libndofdev.dylib")
 
+            self.path("../../libraries/universal-darwin/lib_release/libopenjpeg.1.4.dylib", dst="MacOS/libopenjpeg.1.4.dylib")
+
             self.path("../viewer_components/updater/scripts/darwin/update_install", "MacOS/update_install")
 
             # Info.plist goes directly in Contents
