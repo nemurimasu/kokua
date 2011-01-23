@@ -27,6 +27,7 @@
 #define LL_LLUUID_H
 
 #include <iostream>
+#include <vector>
 #include <set>
 #include "stdtypes.h"
 #include "llpreprocessor.h"
