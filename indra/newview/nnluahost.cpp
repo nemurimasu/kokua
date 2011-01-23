@@ -443,6 +443,25 @@ void NNLuaHost::advance(void)
 	}
 }
 
+LLChat NNLuaHost::filterChat(const LLChat &chat, const LLSD &args)
+{
+	if (L)
+	{
+		lua_getglobal(L, "filter_chat");
+		if (lua_isfunction(L, -1))
+		{
+			pushLLSD(chat.asLLSD());
+			pushLLSD(args);
+			pcall(2, 1);
+			LLChat ret;
+			ret.assign(toLLSD(LLSD::TypeMap));
+			lua_pop(L, 1);
+			return ret;
+		}
+	}
+	return LLChat(chat);
+}
+
 void NNLuaHost::eval(const std::string &code)
 {
 	int lret = luaL_loadbuffer(L, code.data(), code.size(), "eval");

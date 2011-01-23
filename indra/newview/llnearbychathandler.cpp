@@ -42,6 +42,8 @@
 #include "llfloaterreg.h"//for LLFloaterReg::getTypedInstance
 #include "llviewerwindow.h"//for screen channel position
 
+#include "nnluahost.h"
+
 //add LLNearbyChatHandler to LLNotificationsUI namespace
 using namespace LLNotificationsUI;
 
@@ -476,8 +478,10 @@ void LLNearbyChatHandler::initChannel()
 
 
 
-void LLNearbyChatHandler::processChat(const LLChat& chat_msg, const LLSD &args)
+void LLNearbyChatHandler::processChat(const LLChat& in_chat_msg, const LLSD &args)
 {
+	LLChat chat_msg = NNLuaHost::instance().filterChat(in_chat_msg, args);
+
 	if(chat_msg.mMuted == TRUE)
 		return;
 

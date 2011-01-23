@@ -9,6 +9,7 @@ extern "C" {
 
 #include "llsingleton.h"
 #include "llsd.h"
+#include "llchat.h"
 
 class NNLuaHost: public LLSingleton<NNLuaHost>
 {
@@ -18,6 +19,7 @@ public:
 	void advance(void);
 	void eval(const std::string &);
 	NNLuaHost(void);
+	LLChat filterChat(const LLChat &, const LLSD &);
 private:
 	lua_State *L;
 	int pcall(int, int);

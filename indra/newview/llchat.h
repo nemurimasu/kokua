@@ -104,6 +104,14 @@ public:
 	std::string		mURL;
 	EChatStyle		mChatStyle;
 	LLUUID			mSessionID;
+
+	// assign from LLSD
+	void assign(const LLSD&);
+	LLChat& operator=(const LLSD& v) { assign(v); return *this; }
+
+	// conversion to LLSD
+	LLSD asLLSD() const;
+	operator LLSD() const { return asLLSD(); }
 };
 
 #endif
