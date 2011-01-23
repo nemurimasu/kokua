@@ -51,6 +51,7 @@
 #include "llviewerstats.h"
 #include "llnearbychatbar.h"
 #include "llappearancemgr.h"
+#include "nnluahost.h"
 
 // Longest time, in seconds, to wait for all animations to stop playing
 const F32 MAX_WAIT_ANIM_SECS = 30.f;
@@ -622,6 +623,16 @@ BOOL LLGestureMgr::triggerAndReviseString(const std::string &utf8str, std::strin
 					}
 					found_gestures = TRUE;
 				}
+			}
+			else if (first_token && LLStringUtil::compareInsensitive("/lua", cur_token) == 0)
+			{
+				std::string code = utf8str.substr(4);
+				NNLuaHost::instance().eval(code);
+				if (revised_string)
+				{
+					revised_string->assign(LLStringUtil::null);
+				}
+				return TRUE;
 			}
 		}
 		

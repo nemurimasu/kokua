@@ -79,6 +79,7 @@
 #include "llfeaturemanager.h"
 #include "llurlmatch.h"
 #include "lltextutil.h"
+#include "nnluahost.h"
 
 #include "llweb.h"
 #include "llsecondlifeurls.h"
@@ -1000,10 +1001,14 @@ bool LLAppViewer::mainLoop()
 
 	const F32 memory_check_interval = 1.0f ; //second
 
+	NNLuaHost::instance().start();
+
 	// Handle messages
 	while (!LLApp::isExiting())
 	{
 		LLFastTimer::nextFrame(); // Should be outside of any timer instances
+
+		NNLuaHost::instance().advance();
 
 		//clear call stack records
 		llclearcallstacks;
@@ -1278,6 +1283,8 @@ bool LLAppViewer::mainLoop()
 			}
 		}
 	}
+
+	NNLuaHost::instance().stop();
 
 	// Save snapshot for next time, if we made it through initialization
 	if (STATE_STARTED == LLStartUp::getStartupState())
